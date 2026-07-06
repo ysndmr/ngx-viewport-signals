@@ -70,40 +70,6 @@ npm start
 `ngx-viewport-signals` from its built output (`dist/ngx-viewport-signals`), not the source directly —
 standard Angular library-workspace convention.
 
-## Publishing (maintainer)
-
-1. Log in to npm once, locally:
-
-   ```bash
-   npm login
-   ```
-
-2. Build the library — this also strips `tslib` from the published `dependencies` (ng-packagr adds it
-   back on every build; `scripts/patch-lib-package.mjs` removes it) so the zero-dependency badge stays
-   honest:
-
-   ```bash
-   npm run build:lib
-   ```
-
-3. Dry-run the publish before it's live:
-
-   ```bash
-   cd dist/ngx-viewport-signals
-   npm publish --dry-run
-   ```
-
-4. If the file list and `package.json` look right, publish for real:
-
-   ```bash
-   npm publish --access public
-   ```
-
-CI (`.github/workflows/publish.yml`) does this automatically on every push to `main`: it builds the
-library and the demo app, deploys the demo to GitHub Pages, and publishes to npm if an `NPM_TOKEN`
-secret is configured on the repository (`Settings → Secrets and variables → Actions`). No token, no
-publish step — the Pages deploy still runs.
-
 ## License
 
 MIT
