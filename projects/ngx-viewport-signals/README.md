@@ -1,63 +1,60 @@
-# NgxViewportSignals
+# ngx-viewport-signals
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.0.
+Signals-native IntersectionObserver & ResizeObserver primitives for Angular — SSR-safe, zero runtime dependencies.
 
-## Code scaffolding
+**Live demo:** https://ysndmr.github.io/ngx-viewport-signals/
+**Source:** https://github.com/ysndmr/ngx-viewport-signals
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Install
 
 ```bash
-ng generate --help
+npm i ngx-viewport-signals
 ```
 
-## Building
+Supports Angular `17`, `18`, `19`, and `20`.
 
-To build the library, run:
+## Use
 
-```bash
-ng build ngx-viewport-signals
+```ts
+import { ElementRef, inject } from '@angular/core';
+import { inViewport, viewportRatio, elementSize, scrollProgress } from 'ngx-viewport-signals';
+
+class MyComponent {
+  private readonly el = inject(ElementRef);
+
+  // true while the element intersects the viewport
+  visible = inViewport(this.el, { threshold: 0.3, once: true });
+
+  // continuous 0..1 intersection ratio
+  ratio = viewportRatio(this.el);
+
+  // { width, height }, updates on any box-size change
+  size = elementSize(this.el);
+
+  // continuous 0..1 scroll-through progress, driven by a gated rAF loop
+  progress = scrollProgress(this.el);
+}
 ```
 
-This command will compile your project, and the build artifacts will be placed in the `dist/` directory.
+All four accept an `ElementRef`, a raw `Element`, or an accessor function/signal — handy for elements
+resolved via `document.querySelector` or a `viewChild()` query. On the server they never touch
+`IntersectionObserver`/`ResizeObserver` — they just return a static default signal.
 
-### Publishing the Library
+## Configure (optional)
 
-Once the project is built, you can publish your library by following these steps:
+```ts
+import { ApplicationConfig } from '@angular/core';
+import { provideViewportSignals } from 'ngx-viewport-signals';
 
-1. Navigate to the `dist` directory:
-   ```bash
-   cd dist/ngx-viewport-signals
-   ```
-
-2. Run the `npm publish` command to publish your library to the npm registry:
-   ```bash
-   npm publish
-   ```
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideViewportSignals({ defaultRootMargin: '0px', defaultThreshold: 0 })
+  ]
+};
 ```
 
-## Running end-to-end tests
+`provideViewportSignals()` is optional — every primitive works with zero setup.
 
-For end-to-end (e2e) testing, run:
+## License
 
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+MIT
