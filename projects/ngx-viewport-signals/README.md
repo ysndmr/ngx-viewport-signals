@@ -11,7 +11,7 @@ Signals-native IntersectionObserver & ResizeObserver primitives for Angular — 
 npm i ngx-viewport-signals
 ```
 
-Supports Angular `17`, `18`, `19`, and `20`.
+Supports Angular `17` through `21`.
 
 ## Use
 
