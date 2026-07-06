@@ -1,0 +1,70 @@
+<header class="hero">
+  <p class="demo-eyebrow">Angular Signals · Zero deps · SSR-safe</p>
+  <h1>ngx-viewport-signals</h1>
+  <p class="demo-lede hero-lede">
+    IntersectionObserver and ResizeObserver, wrapped as Angular Signals. No RxJS, no Zone.js, no
+    manual cleanup — the four primitives below replace the ad-hoc scroll code you're probably
+    already copy-pasting between components.
+  </p>
+
+  <div class="compare-grid hero-compare">
+    <div class="compare-card compare-card--bad code-block">
+      <div class="code-block__bar">
+        <span class="code-block__dot"></span>
+        <span class="code-block__dot"></span>
+        <span class="code-block__dot"></span>
+      </div>
+      <h3>Without the library</h3>
+      <pre><code [innerHTML]="beforeCode"></code></pre>
+    </div>
+
+    <div class="compare-card compare-card--good code-block">
+      <div class="code-block__bar">
+        <span class="code-block__dot"></span>
+        <span class="code-block__dot"></span>
+        <span class="code-block__dot"></span>
+      </div>
+      <h3>With ngx-viewport-signals</h3>
+      <pre><code [innerHTML]="afterCode"></code></pre>
+    </div>
+  </div>
+
+  <div class="install-row">
+    <span class="prompt">$</span>
+    <span>npm install ngx-viewport-signals</span>
+  </div>
+
+  <div class="feature-grid">
+    <div class="feature-pill">Zero runtime deps</div>
+    <div class="feature-pill">SSR-safe by default</div>
+    <div class="feature-pill">Signals-native</div>
+    <div class="feature-pill">Works on any Element</div>
+  </div>
+
+  <div class="scroll-cue" aria-hidden="true">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<app-reveal-section />
+<app-progress-bar-section />
+<app-resize-section />
+<app-parallax-section />
+
+<footer class="site-footer">
+  <h2>Try it in your own app</h2>
+  <p class="demo-lede" style="margin-inline: auto;">
+    MIT licensed. No dependencies to audit, no Zone.js requirement, works the same whether your
+    app is zoneless or not.
+  </p>
+  <div class="install-row">
+    <span class="prompt">$</span>
+    <span>npm install ngx-viewport-signals</span>
+  </div>
+  <div class="footer-links">
+    <a class="footer-link" href="https://github.com/ysndmr/ngx-viewport-signals">GitHub</a>
+    <a class="footer-link" href="https://www.npmjs.com/package/ngx-viewport-signals">npm</a>
+  </div>
+</footer>

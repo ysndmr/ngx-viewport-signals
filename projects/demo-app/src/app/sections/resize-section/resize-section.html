@@ -1,0 +1,18 @@
+<section class="demo-section">
+  <p class="demo-eyebrow">03 — elementSize()</p>
+  <h2>Live dimensions, no window resize listeners</h2>
+  <p class="demo-lede">
+    Wraps ResizeObserver — useful for responsive charts, canvas/WebGL surfaces, or masonry grids
+    that need to recompute layout when a container changes size for any reason, not just a window
+    resize.
+  </p>
+
+  <div class="resize-box" #box>
+    <span>{{ size().width | number: '1.0-0' }} × {{ size().height | number: '1.0-0' }}</span>
+    <small>drag the corner ↘</small>
+  </div>
+
+  <div class="code-block">
+    <pre><code [innerHTML]="codeSnippet"></code></pre>
+  </div>
+</section>

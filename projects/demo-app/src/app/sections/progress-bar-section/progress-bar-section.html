@@ -1,0 +1,32 @@
+<section class="demo-section progress-panel">
+  <p class="demo-eyebrow">02 — viewportRatio()</p>
+  <h2>How much of this panel do you actually see?</h2>
+  <p class="demo-lede">
+    A continuous 0–1 signal of how much of this element intersects the viewport — handy for
+    scroll-linked progress indicators, "read progress" bars, or fading effects tied to visibility.
+  </p>
+
+  <div class="progress-visual">
+    <svg class="progress-ring" viewBox="0 0 100 100">
+      <circle class="progress-ring__bg" cx="50" cy="50" r="45" />
+      <circle
+        class="progress-ring__fg"
+        cx="50"
+        cy="50"
+        r="45"
+        [style.stroke-dasharray]="ringCircumference"
+        [style.stroke-dashoffset]="ringOffset()"
+      />
+    </svg>
+    <div class="progress-readout">{{ ratio() | percent: '1.0-0' }}</div>
+  </div>
+
+  <div class="progress-track">
+    <div class="progress-fill" [style.width.%]="ratio() * 100"></div>
+  </div>
+
+  <div class="code-block">
+    <pre><code><span class="tk-k">const</span> ratio = <span class="tk-f">viewportRatio</span>(<span class="tk-k">this</span>.panelRef);
+<span class="tk-c">// ratio() -&gt; 0..1, updates continuously on scroll</span></code></pre>
+  </div>
+</section>

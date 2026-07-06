@@ -1,0 +1,64 @@
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0;
+  padding: 6rem 1.5rem 4rem;
+  position: relative;
+}
+
+.hero h1 {
+  font-size: clamp(2.25rem, 6vw, 4rem);
+  color: #f0b030;
+  margin: 0;
+}
+
+.hero-lede {
+  margin: 1.25rem auto 0;
+  font-size: 1.05rem;
+}
+
+.hero-compare {
+  width: min(100%, 760px);
+  text-align: left;
+}
+
+.scroll-cue {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.scroll-cue span {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: #f0b030;
+  opacity: 0.25;
+  animation: scrollCuePulse 1.6s ease-in-out infinite;
+}
+
+.scroll-cue span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.scroll-cue span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes scrollCuePulse {
+  0%, 100% {
+    opacity: 0.2;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(4px);
+  }
+}

@@ -1,0 +1,30 @@
+.resize-box {
+  width: 320px;
+  height: 200px;
+  min-width: 160px;
+  min-height: 100px;
+  max-width: 100%;
+  resize: both;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 2rem;
+  border-radius: 0.75rem;
+  background: #12141a;
+  border: 1px dashed #3a3f4b;
+  font-family: 'Space Mono', monospace;
+  color: #f0b030;
+  transition: border-color 0.2s ease;
+}
+
+.resize-box:hover {
+  border-color: #f0b030;
+}
+
+.resize-box small {
+  color: #5c6370;
+  font-size: 0.7rem;
+}

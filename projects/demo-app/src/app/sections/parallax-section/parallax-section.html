@@ -1,0 +1,27 @@
+<section class="demo-section parallax-panel">
+  <div class="parallax-layer parallax-layer--back" [style.transform]="backTransform()"></div>
+  <div class="parallax-layer parallax-layer--mid" [style.transform]="midTransform()"></div>
+
+  @for (p of particles; track p.left) {
+    <span
+      class="parallax-particle"
+      [style.left]="p.left"
+      [style.width]="p.size"
+      [style.height]="p.size"
+      [style.transform]="particleTransform(p.speed)"
+    ></span>
+  }
+
+  <div class="parallax-layer parallax-layer--front" [style.transform]="frontTransform()">
+    <p class="demo-eyebrow">04 — scrollProgress()</p>
+    <h2>Three layers, six particles, one signal</h2>
+    <p class="demo-lede parallax-lede">
+      No GSAP, no ScrollTrigger — just <code>computed()</code> reading a single 0–1 progress
+      signal driven by a gated rAF loop under the hood.
+    </p>
+
+    <div class="code-block parallax-code">
+      <pre><code [innerHTML]="codeSnippet"></code></pre>
+    </div>
+  </div>
+</section>

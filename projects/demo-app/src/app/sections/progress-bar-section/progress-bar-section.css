@@ -1,0 +1,64 @@
+:host {
+  display: block;
+}
+
+.progress-panel {
+  min-height: 150vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.progress-visual {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  margin: 2rem auto 0;
+}
+
+.progress-ring {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.progress-ring__bg,
+.progress-ring__fg {
+  fill: none;
+  stroke-width: 6;
+}
+
+.progress-ring__bg {
+  stroke: #1c1f26;
+}
+
+.progress-ring__fg {
+  stroke: #f0b030;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.05s linear;
+}
+
+.progress-readout {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Mono', monospace;
+  font-size: 1.75rem;
+  color: #f0b030;
+}
+
+.progress-track {
+  height: 0.5rem;
+  border-radius: 999px;
+  background: #1c1f26;
+  overflow: hidden;
+  margin-top: 2rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #f0b030;
+  transition: width 0.05s linear;
+}

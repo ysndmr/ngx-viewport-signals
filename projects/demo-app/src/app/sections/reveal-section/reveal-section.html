@@ -1,0 +1,12 @@
+<section class="demo-section">
+  <p class="demo-eyebrow">01 — inViewport()</p>
+  <h2>Six reasons, revealed as you scroll</h2>
+  <p class="demo-lede">
+    Each card below fades in exactly once, driven entirely by <code>inViewport()</code> on its own
+    host element — scroll back up and they stay put.
+  </p>
+
+  @for (feature of features; track feature.label; let i = $index) {
+    <app-reveal-card [index]="i" [label]="feature.label" [description]="feature.description" />
+  }
+</section>

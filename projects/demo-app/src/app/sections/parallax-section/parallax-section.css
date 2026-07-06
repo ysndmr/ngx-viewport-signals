@@ -1,0 +1,55 @@
+:host {
+  display: block;
+}
+
+.parallax-panel {
+  position: relative;
+  min-height: 170vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 100%;
+  padding-inline: 1.5rem;
+}
+
+.parallax-layer {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.parallax-layer--back {
+  background: radial-gradient(circle at 50% 30%, rgba(240, 176, 48, 0.14), transparent 60%);
+}
+
+.parallax-layer--mid {
+  background: radial-gradient(circle at 50% 60%, rgba(240, 176, 48, 0.08), transparent 55%);
+}
+
+.parallax-particle {
+  position: absolute;
+  top: 15%;
+  border-radius: 50%;
+  background: #f0b030;
+  opacity: 0.35;
+  will-change: transform;
+}
+
+.parallax-layer--front {
+  position: relative;
+  inset: auto;
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.parallax-lede {
+  margin-inline: auto;
+}
+
+.parallax-code {
+  text-align: left;
+  max-width: 480px;
+  margin-inline: auto;
+}
