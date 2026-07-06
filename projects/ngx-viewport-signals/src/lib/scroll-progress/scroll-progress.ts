@@ -1,6 +1,7 @@
-import { DestroyRef, inject, Injector, runInInjectionContext, signal, Signal } from '@angular/core';
+import { DestroyRef, inject, Injector, signal, Signal } from '@angular/core';
 import { ElementInput, ScrollProgressOptions } from '../types/viewport.types';
 import { toElementSignal } from '../utils/element.utils';
+import { withInjector } from '../utils/injection.utils';
 import { watchElementWithObserver } from '../utils/observer.utils';
 import { isBrowserPlatform } from '../utils/platform.utils';
 
@@ -9,9 +10,7 @@ export function scrollProgress(
   options: ScrollProgressOptions = {},
   injector?: Injector
 ): Signal<number> {
-  return injector
-    ? runInInjectionContext(injector, () => scrollProgressInternal(elementInput, options))
-    : scrollProgressInternal(elementInput, options);
+  return withInjector(injector, () => scrollProgressInternal(elementInput, options));
 }
 
 function scrollProgressInternal(elementInput: ElementInput, options: ScrollProgressOptions): Signal<number> {

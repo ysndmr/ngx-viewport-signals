@@ -40,7 +40,7 @@ describe('inViewport', () => {
     expect(visible()).toBe(false);
   });
 
-  it('freezes the value after the first intersection when once is true', async () => {
+  it('freezes the value and disconnects the observer after the first intersection when once is true', async () => {
     const el = document.createElement('div');
 
     const visible = TestBed.runInInjectionContext(() => inViewport(el, { once: true }));
@@ -49,9 +49,22 @@ describe('inViewport', () => {
     const observer = FakeIntersectionObserver.instances[0];
     observer.trigger({ target: el, isIntersecting: true });
     expect(visible()).toBe(true);
+    expect(observer.disconnected).toBe(true);
 
     observer.trigger({ target: el, isIntersecting: false });
     expect(visible()).toBe(true);
+  });
+
+  it('keeps observing (does not disconnect) while once is true but not yet intersecting', async () => {
+    const el = document.createElement('div');
+
+    const visible = TestBed.runInInjectionContext(() => inViewport(el, { once: true }));
+    await flushEffects();
+
+    const observer = FakeIntersectionObserver.instances[0];
+    observer.trigger({ target: el, isIntersecting: false });
+    expect(visible()).toBe(false);
+    expect(observer.disconnected).toBe(false);
   });
 
   it('disconnects the observer when the injector is destroyed', async () => {

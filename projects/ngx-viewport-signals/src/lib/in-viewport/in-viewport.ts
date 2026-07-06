@@ -1,46 +1,34 @@
-import { inject, Injector, runInInjectionContext, signal, Signal } from '@angular/core';
+import { inject, Injector, Signal } from '@angular/core';
 import { VIEWPORT_SIGNALS_CONFIG } from '../config/viewport.config';
 import { ElementInput, ViewportSignalOptions } from '../types/viewport.types';
-import { resolveElementOnce, toElementSignal } from '../utils/element.utils';
-import { watchElementWithObserver } from '../utils/observer.utils';
-import { isBrowserPlatform } from '../utils/platform.utils';
+import { createElementObserverSignal } from '../utils/create-element-observer-signal';
+import { resolveElement } from '../utils/element.utils';
+import { withInjector } from '../utils/injection.utils';
 
 export function inViewport(
   elementInput: ElementInput,
   options: ViewportSignalOptions = {},
   injector?: Injector
 ): Signal<boolean> {
-  return injector
-    ? runInInjectionContext(injector, () => inViewportInternal(elementInput, options))
-    : inViewportInternal(elementInput, options);
+  return withInjector(injector, () => inViewportInternal(elementInput, options));
 }
 
 function inViewportInternal(elementInput: ElementInput, options: ViewportSignalOptions): Signal<boolean> {
-  const isVisible = signal(false);
-  if (!isBrowserPlatform()) {
-    return isVisible.asReadonly();
-  }
-
   const config = inject(VIEWPORT_SIGNALS_CONFIG);
-  const elementSignal = toElementSignal(elementInput);
-  let settled = false;
 
-  watchElementWithObserver(
-    elementSignal,
-    () =>
-      new IntersectionObserver(
-        ([entry]) => {
-          if (settled && options.once) return;
-          isVisible.set(entry.isIntersecting);
-          if (options.once && entry.isIntersecting) settled = true;
-        },
-        {
-          root: resolveElementOnce(options.root),
-          rootMargin: options.rootMargin ?? config.defaultRootMargin,
-          threshold: options.threshold ?? config.defaultThreshold,
-        }
-      )
+  return createElementObserverSignal(elementInput, false, (setValue) =>
+    new IntersectionObserver(
+      ([entry], observer) => {
+        setValue(entry.isIntersecting);
+        // once the reveal has fired, there's nothing left to observe — disconnect
+        // rather than leaving a live IntersectionObserver around for the page's lifetime
+        if (options.once && entry.isIntersecting) observer.disconnect();
+      },
+      {
+        root: resolveElement(options.root),
+        rootMargin: options.rootMargin ?? config.defaultRootMargin,
+        threshold: options.threshold ?? config.defaultThreshold,
+      }
+    )
   );
-
-  return isVisible.asReadonly();
 }

@@ -1,34 +1,30 @@
-import { DestroyRef, effect, inject, Signal } from '@angular/core';
+import { effect, Signal } from '@angular/core';
 
-interface LifecycleObserver {
+export interface LifecycleObserver {
   observe(el: Element): void;
   unobserve(el: Element): void;
   disconnect(): void;
 }
 
+/**
+ * effect()'s onCleanup runs both before the next re-run (element changed) and on
+ * injector destruction — a single hook covers both teardown cases, no separate
+ * DestroyRef wiring needed.
+ */
 export function watchElementWithObserver<TObserver extends LifecycleObserver>(
   elementSignal: Signal<Element | null>,
   createObserver: () => TObserver
 ): void {
-  const destroyRef = inject(DestroyRef);
-  let observer: TObserver | null = null;
-  let observedEl: Element | null = null;
-
-  const cleanup = () => {
-    if (observer && observedEl) observer.unobserve(observedEl);
-    observer?.disconnect();
-    observer = null;
-    observedEl = null;
-  };
-
-  effect(() => {
+  effect((onCleanup) => {
     const el = elementSignal();
-    cleanup();
     if (!el) return;
-    observer = createObserver();
-    observer.observe(el);
-    observedEl = el;
-  });
 
-  destroyRef.onDestroy(cleanup);
+    const observer = createObserver();
+    observer.observe(el);
+
+    onCleanup(() => {
+      observer.unobserve(el);
+      observer.disconnect();
+    });
+  });
 }

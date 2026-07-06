@@ -25,6 +25,7 @@ export class FakeIntersectionObserver {
   }
 
   trigger(entry: Partial<IntersectionObserverEntry> & { target: Element }): void {
+    if (this.disconnected) return;
     this.callback([entry as IntersectionObserverEntry], this as unknown as IntersectionObserver);
   }
 }
@@ -53,6 +54,7 @@ export class FakeResizeObserver {
   }
 
   trigger(entry: Partial<ResizeObserverEntry> & { target: Element }): void {
+    if (this.disconnected) return;
     this.callback([entry as ResizeObserverEntry], this as unknown as ResizeObserver);
   }
 }
